@@ -115,7 +115,7 @@ const getScoreBreakdown = (prompt: string) => {
 const getLevelMeta = (score: number) => {
   if (score <= 4) {
     return {
-      label: "Beginner",
+      label: "Needs Detail",
       accent: "#f97316",
       soft: "rgba(249, 115, 22, 0.12)",
     };
@@ -123,14 +123,14 @@ const getLevelMeta = (score: number) => {
 
   if (score <= 7) {
     return {
-      label: "Intermediate",
+      label: "Good Shape",
       accent: "#2563eb",
       soft: "rgba(37, 99, 235, 0.12)",
     };
   }
 
   return {
-    label: "Pro",
+    label: "Ready to Use",
     accent: "#059669",
     soft: "rgba(5, 150, 105, 0.12)",
   };
@@ -144,7 +144,7 @@ const PromptGamifiedAssistant: React.FC = () => {
   const outputRef = useRef<HTMLDivElement>(null);
   const breakdownRef = useRef<HTMLDivElement>(null);
   const [prompt, setPrompt] = useState(
-    "Write a launch email for our AI assistant. Audience: SaaS product managers. Use a concise tone and format the response as a table with subject line ideas and email copy."
+    "Write a launch email for our new AI assistant. Audience: product managers. Keep it friendly and easy to scan."
   );
   const [comparison, setComparison] = useState<{ before: string; after: string } | null>(
     null
@@ -152,7 +152,7 @@ const PromptGamifiedAssistant: React.FC = () => {
   const [improvement, setImprovement] = useState<number | null>(null);
   const [isImproving, setIsImproving] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [guideOpen, setGuideOpen] = useState(true);
+  const [guideOpen, setGuideOpen] = useState(false);
   const [currentGuideStep, setCurrentGuideStep] = useState(0);
   const previousScoreRef = useRef<number>(getScoreBreakdown(prompt).score);
 
@@ -181,25 +181,25 @@ const PromptGamifiedAssistant: React.FC = () => {
         id: "details",
         label: "Add more details",
         apply: (input) =>
-          `${input.trim()} Include the goal, key constraints, and what success should look like.`.trim(),
+          `${input.trim()} Include what you want, why it matters, and the most important details.`.trim(),
       });
     }
 
     if (!analysis.hasFormat) {
       list.push({
         id: "format",
-        label: "Specify format",
+        label: "Choose a format",
         apply: (input) =>
-          `${input.trim()} Format the response as a short bullet list with a final summary table.`.trim(),
+          `${input.trim()} Present it as a short list with a clear summary at the end.`.trim(),
       });
     }
 
     if (!/\baudience\b/i.test(prompt)) {
       list.push({
         id: "audience",
-        label: "Add audience",
+        label: "Say who it is for",
         apply: (input) =>
-          `${input.trim()} Audience: busy decision-makers with limited technical background.`.trim(),
+          `${input.trim()} Audience: busy people who want a clear and simple explanation.`.trim(),
       });
     }
 
@@ -210,49 +210,49 @@ const PromptGamifiedAssistant: React.FC = () => {
     () => [
       {
         id: "prompt-input",
-        title: "Start with the prompt field",
+        title: "Start with your request",
         description:
-          "This is the main guide entry point. Add the task, audience, and response shape here so the assistant has strong context.",
+          "Describe what you want in plain language. A little extra detail helps the assistant give a better answer.",
         targetRef: inputRef,
         preferredPlacement: "right",
       },
       {
         id: "score-meter",
-        title: "Track quality with live scoring",
+        title: "Watch the clarity meter",
         description:
-          "The score updates while you type so you can quickly tell when the prompt becomes more specific and structured.",
+          "This updates as you type and shows how clear and complete your request feels.",
         targetRef: scoreRef,
         preferredPlacement: "bottom",
       },
       {
         id: "improve-button",
-        title: "Use AI-assisted refinement",
+        title: "Let the assistant polish it",
         description:
-          "When the prompt needs polish, this action sends it to the backend and returns a stronger, cleaner version.",
+          "Use this when you want a cleaner, clearer version of your request before sending it on.",
         targetRef: buttonRef,
         preferredPlacement: "bottom",
       },
       {
         id: "suggestions",
-        title: "Apply guided improvements fast",
+        title: "Use simple suggestions",
         description:
-          "These quick actions help users add missing detail, specify format, and clarify audience without leaving the flow.",
+          "These quick ideas help you add missing details without having to rewrite everything yourself.",
         targetRef: suggestionRef,
         preferredPlacement: "top",
       },
       {
         id: "comparison-output",
-        title: "Review before and after",
+        title: "See the improved version",
         description:
-          "The output area shows what changed so users can trust the rewrite and compare the improved structure side by side.",
+          "You can compare your original wording with the improved version and choose what you like best.",
         targetRef: outputRef,
         preferredPlacement: "top",
       },
       {
         id: "breakdown-panel",
-        title: "Explain the score transparently",
+        title: "Understand what helps",
         description:
-          "This panel reinforces the coaching model by separating length, context, and format into clear scoring signals.",
+          "This panel quietly explains what usually makes a request easier for the assistant to understand.",
         targetRef: breakdownRef,
         preferredPlacement: "top",
         ctaLabel: "Got it",
@@ -326,7 +326,7 @@ const PromptGamifiedAssistant: React.FC = () => {
         minHeight: "100vh",
         padding: 24,
         background:
-          "radial-gradient(circle at top left, rgba(14,165,233,0.18), transparent 30%), radial-gradient(circle at top right, rgba(16,185,129,0.18), transparent 26%), linear-gradient(180deg, #eff6ff 0%, #f8fafc 46%, #eef2ff 100%)",
+          "radial-gradient(circle at top left, rgba(14,165,233,0.12), transparent 30%), radial-gradient(circle at top right, rgba(16,185,129,0.12), transparent 26%), linear-gradient(180deg, #f8fafc 0%, #fdfdfc 46%, #f8fafc 100%)",
         fontFamily:
           'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
         color: "#0f172a",
@@ -376,35 +376,35 @@ const PromptGamifiedAssistant: React.FC = () => {
                   <div
                     style={{
                       ...chipBase,
-                      background: "rgba(37,99,235,0.08)",
-                      color: "#1d4ed8",
+                      background: "rgba(15,23,42,0.06)",
+                      color: "#334155",
                       width: "fit-content",
                       marginBottom: 14,
                     }}
                   >
-                    Prompt Coach
+                    Message Helper
                   </div>
                   <h1
                     style={{
                       margin: 0,
-                      fontSize: "clamp(28px, 4vw, 42px)",
-                      lineHeight: 1.02,
+                      fontSize: "clamp(28px, 4vw, 40px)",
+                      lineHeight: 1.08,
                       letterSpacing: "-0.04em",
                     }}
                   >
-                    Level up prompts in real time
+                    Turn a rough idea into a clearer request
                   </h1>
                   <p
                     style={{
                       margin: "14px 0 0",
-                      maxWidth: 700,
-                      fontSize: 16,
+                      maxWidth: 620,
+                      fontSize: 17,
                       lineHeight: 1.65,
                       color: "#475569",
                     }}
                   >
-                    A production-ready assistant panel that scores prompt quality, suggests
-                    improvements, and rewrites vague requests into sharper instructions.
+                    Write what you need, tap one button, and get a cleaner version that is easier
+                    for the assistant to understand.
                   </p>
                 </div>
 
@@ -450,7 +450,7 @@ const PromptGamifiedAssistant: React.FC = () => {
                     marginBottom: 10,
                   }}
                 >
-                  Prompt Input
+                  What would you like help with?
                 </label>
 
                 <textarea
@@ -458,7 +458,7 @@ const PromptGamifiedAssistant: React.FC = () => {
                   id="prompt-editor"
                   value={prompt}
                   onChange={(event) => setPrompt(event.target.value)}
-                  placeholder="Describe what you want, who it is for, and how the response should be formatted."
+                  placeholder="Example: Write a short welcome email for new customers. Keep it warm, simple, and easy to read."
                   style={{
                     width: "100%",
                     minHeight: 220,
@@ -502,7 +502,7 @@ const PromptGamifiedAssistant: React.FC = () => {
                           fontWeight: 600,
                         }}
                       >
-                        Prompt Score
+                        Clarity Meter
                       </span>
                       <span
                         style={{
@@ -565,7 +565,7 @@ const PromptGamifiedAssistant: React.FC = () => {
                       boxShadow: "0 12px 30px rgba(37, 99, 235, 0.28)",
                     }}
                   >
-                    {isImproving ? "Improving..." : "Improve Prompt"}
+                    {isImproving ? "Improving..." : "Improve My Message"}
                   </button>
                 </div>
 
@@ -648,20 +648,20 @@ const PromptGamifiedAssistant: React.FC = () => {
                               fontSize: 15,
                               fontWeight: 700,
                               color: "#0f172a",
-                            }}
-                          >
-                            Suggested upgrades
-                          </div>
-                          <div
-                            style={{
-                              fontSize: 14,
-                              color: "#64748b",
-                              marginTop: 4,
-                            }}
-                          >
-                            Click a suggestion to enrich the prompt instantly.
-                          </div>
+                          }}
+                        >
+                          Quick ways to improve it
                         </div>
+                        <div
+                          style={{
+                            fontSize: 14,
+                            color: "#64748b",
+                            marginTop: 4,
+                          }}
+                        >
+                          Tap one to make your message clearer.
+                        </div>
+                      </div>
                       </div>
 
                       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -774,7 +774,7 @@ const PromptGamifiedAssistant: React.FC = () => {
                         minHeight: 92,
                       }}
                     >
-                      Improved prompt output will appear here after the API rewrite runs.
+                      Your improved version will appear here after you click the button above.
                     </div>
                   )}
                 </AnimatePresence>
@@ -800,7 +800,7 @@ const PromptGamifiedAssistant: React.FC = () => {
                       letterSpacing: "-0.03em",
                     }}
                   >
-                    Score Breakdown
+                    What makes a request clearer
                   </h2>
                   <span
                     style={{
@@ -815,10 +815,10 @@ const PromptGamifiedAssistant: React.FC = () => {
                   </span>
                 </div>
 
-                {[
-                  { label: "Length", value: analysis.lengthScore, total: 4 },
-                  { label: "Context", value: analysis.contextScore, total: 3 },
-                  { label: "Format", value: analysis.formatScore, total: 3 },
+                  {[
+                  { label: "Enough detail", value: analysis.lengthScore, total: 4 },
+                  { label: "Helpful context", value: analysis.contextScore, total: 3 },
+                  { label: "Clear format", value: analysis.formatScore, total: 3 },
                 ].map((item) => (
                   <div key={item.label} style={{ marginBottom: 14 }}>
                     <div
@@ -866,13 +866,13 @@ const PromptGamifiedAssistant: React.FC = () => {
                     letterSpacing: "-0.03em",
                   }}
                 >
-                  Level Guide
+                  Progress Guide
                 </h2>
 
                 {[
-                  { label: "Beginner", range: "0-4", color: "#f97316" },
-                  { label: "Intermediate", range: "5-7", color: "#2563eb" },
-                  { label: "Pro", range: "8-10", color: "#059669" },
+                  { label: "Needs Detail", range: "0-4", color: "#f97316" },
+                  { label: "Good Shape", range: "5-7", color: "#2563eb" },
+                  { label: "Ready to Use", range: "8-10", color: "#059669" },
                 ].map((item) => (
                   <div
                     key={item.label}
@@ -912,7 +912,7 @@ const PromptGamifiedAssistant: React.FC = () => {
                     letterSpacing: "-0.03em",
                   }}
                 >
-                  Coaching Hints
+                  Simple Tips
                 </h2>
                 <div
                   style={{
@@ -923,9 +923,9 @@ const PromptGamifiedAssistant: React.FC = () => {
                     lineHeight: 1.7,
                   }}
                 >
-                  <div>Strong prompts explain the task, audience, and desired output.</div>
-                  <div>Structured formats like lists and tables increase clarity and control.</div>
-                  <div>Specific context usually lifts both score and answer quality.</div>
+                  <div>Say what you want as clearly as you can.</div>
+                  <div>Add a little context so the assistant understands the situation.</div>
+                  <div>If helpful, mention how you want the answer presented.</div>
                 </div>
               </div>
             </div>
