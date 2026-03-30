@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+.env
+.env.*
+!.env.example
+
+backend/.venv/
+backend/__pycache__/
+backend/app/__pycache__/
+
+*.pyc
+*.pyo
+
+tsconfig.tsbuildinfo
