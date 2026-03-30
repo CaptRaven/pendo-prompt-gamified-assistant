@@ -12,6 +12,7 @@ app = FastAPI()
 
 
 @app.post("/", response_model=ImproveResponse, status_code=status.HTTP_200_OK)
+@app.post("/improve", response_model=ImproveResponse, status_code=status.HTTP_200_OK)
 async def improve(request: ImproveRequest) -> ImproveResponse:
     try:
         improved = await improve_prompt(request.prompt)
