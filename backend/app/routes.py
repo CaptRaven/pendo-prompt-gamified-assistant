@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
-from app.models import ImproveRequest, ImproveResponse
-from app.services.mistral_service import (
+from .models import ImproveRequest, ImproveResponse
+from .services.mistral_service import (
     MistralConfigurationError,
     MistralServiceError,
     improve_prompt,
