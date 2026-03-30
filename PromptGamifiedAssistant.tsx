@@ -152,7 +152,7 @@ const PromptGamifiedAssistant: React.FC = () => {
   const [improvement, setImprovement] = useState<number | null>(null);
   const [isImproving, setIsImproving] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [guideOpen, setGuideOpen] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(true);
   const [currentGuideStep, setCurrentGuideStep] = useState(0);
   const previousScoreRef = useRef<number>(getScoreBreakdown(prompt).score);
 
